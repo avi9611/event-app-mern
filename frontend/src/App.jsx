@@ -14,7 +14,11 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { themeStore } from "./store/themeStore";
 import { io } from 'socket.io-client';
 
-const socket = io('http://localhost:5002'); 
+const SOCKET_URL = import.meta.env.MODE === "development" 
+  ? "http://localhost:5002" 
+  : "https://your-backend-vercel-url.vercel.app";
+
+const socket = io(SOCKET_URL);
 
 socket.on('attendeeUpdate', (data) => {
   console.log('Attendee update:', data);
