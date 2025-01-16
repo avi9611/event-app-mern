@@ -5,7 +5,7 @@ import { io } from "socket.io-client";
 
 const BASE_URL = import.meta.env.MODE === "development" 
   ? "http://localhost:5002" 
-  : "https://event-app-mern-back-flame.vercel.app";
+  : "https://event-app-mern-back.vercel.app/";
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,

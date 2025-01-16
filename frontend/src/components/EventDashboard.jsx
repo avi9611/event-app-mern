@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const API_URL = import.meta.env.MODE === "development" 
   ? "http://localhost:5002" 
-  : "https://event-app-mern-back-flame.vercel.app";
+  : "https://event-app-mern-back.vercel.app/";
 
 const EventDashboard = () => {
   const navigate = useNavigate();
