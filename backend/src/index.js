@@ -16,37 +16,44 @@ import eventRoutes from "./routes/event.route.js";
 const PORT = process.env.PORT || 5002;
 const __dirname = path.resolve();
 
-app.use(express.json({ limit: '10mb' }));
-app.use(cookieParser());
+// Dynamically set the allowed origins
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://event-app-mern-g7x1.vercel.app"
+];
+
 app.use(cors({
-    origin: [
-      "http://localhost:5173",
-      "https://event-app-mern-g7x1.vercel.app"
-    ],
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
-app.use((req, res, next) => {
-    req.io = io; 
-    next();
-});
+app.use(express.json({ limit: '10mb' }));
+app.use(cookieParser());
 
+// Your routes
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/events", eventRoutes);
-app.options("*", cors());
 
+// Serve static files in production
 if (process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "../frontend/dist")));
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-    app.get("*", (req, res) => {
-        res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
-    });
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+  });
 }
 
+// Start the server
 server.listen(PORT, () => {
-    console.log("Server is running on port:" + PORT);
-    connectDB();
+  console.log("Server is running on port:" + PORT);
+  connectDB();
 });
