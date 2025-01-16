@@ -2,6 +2,11 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import EventAttendees from "./EventAttendees";
 
+const API_URL =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:5002"
+    : "https://event-app-mern-s4u6.vercel.app";
+
 const EventDetails = () => {
   const { eventId } = useParams();
   const navigate = useNavigate();
@@ -9,12 +14,12 @@ const EventDetails = () => {
   const [error, setError] = useState("");
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
-  const isEventOwner = event && currentUser && event.owner._id === currentUser._id;
-
+  const isEventOwner =
+    event && currentUser && event.owner._id === currentUser._id;
 
   const handleDeleteEvent = async () => {
     try {
-      const response = await fetch(`http://localhost:5002/api/events/${eventId}`, {
+      const response = await fetch(`${API_URL}/api/events/${eventId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -36,7 +41,7 @@ const EventDetails = () => {
 
   const handleSaveEvent = async (updatedEvent) => {
     try {
-      const response = await fetch(`http://localhost:5002/api/events/${eventId}`, {
+      const response = await fetch(`${API_URL}/api/events/${eventId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -65,7 +70,7 @@ const EventDetails = () => {
 
   const handleJoinEvent = async () => {
     try {
-      const response = await fetch(`http://localhost:5002/api/events/${eventId}/join`, {
+      const response = await fetch(`${API_URL}/api/events/${eventId}/join`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -100,7 +105,7 @@ const EventDetails = () => {
         throw new Error("Event ID is missing.");
       }
 
-      const response = await fetch(`http://localhost:5002/api/events/${eventId}`, {
+      const response = await fetch(`${API_URL}/api/events/${eventId}`, {
         credentials: "include",
       });
 
@@ -125,9 +130,11 @@ const EventDetails = () => {
   }
 
   if (!event) {
-    return <div className="flex justify-center items-center h-screen">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-    </div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
   }
 
   return (
@@ -157,9 +164,12 @@ const EventDetails = () => {
         </div>
 
         <div className="bg-gray-50 p-4 rounded-lg">
-          <h2 className="text-lg font-semibold text-gray-700">Category & Status</h2>
+          <h2 className="text-lg font-semibold text-gray-700">
+            Category & Status
+          </h2>
           <p className="text-gray-600 mt-2">
-            🏷️ {event.category} | {event.status === "upcoming" ? (
+            🏷️ {event.category} |{" "}
+            {event.status === "upcoming" ? (
               <span className="text-green-500">Upcoming</span>
             ) : (
               <span className="text-gray-500">Past</span>
@@ -175,9 +185,7 @@ const EventDetails = () => {
         >
           Join Event
         </button>
-        {error && (
-          <p className="text-red-500 mt-2">{error}</p>
-        )}
+        {error && <p className="text-red-500 mt-2">{error}</p>}
       </div>
 
       <div className="mt-8">

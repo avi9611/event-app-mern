@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+const API_URL = import.meta.env.MODE === "development" 
+  ? "http://localhost:5002" 
+  : "https://event-app-mern-s4u6.vercel.app";
+
 const EventDashboard = () => {
   const navigate = useNavigate();
   const [events, setEvents] = useState([]);
@@ -23,7 +27,7 @@ const EventDashboard = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch("http://localhost:5002/api/events", {
+        const response = await fetch(`${API_URL}/api/events`, {
           credentials: "include",
         });
         const data = await response.json();
@@ -38,7 +42,7 @@ const EventDashboard = () => {
   const handleCreateEvent = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5002/api/events", {
+      const response = await fetch(`${API_URL}/api/events`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

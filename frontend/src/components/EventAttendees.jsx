@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
-const SOCKET_URL = import.meta.env.MODE === "development" 
+const API_URL = import.meta.env.MODE === "development" 
   ? "http://localhost:5002" 
   : "https://event-app-mern-s4u6.vercel.app";
+
+const SOCKET_URL = API_URL;
 
 const socket = io(SOCKET_URL);
 
@@ -14,7 +16,7 @@ const EventAttendees = ({ eventId }) => {
     const fetchAttendees = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5002/api/events/${eventId}/attendees`,
+          `${API_URL}/api/events/${eventId}/attendees`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
