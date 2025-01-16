@@ -9,21 +9,18 @@ const EventDetails = () => {
   const [error, setError] = useState("");
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
-  const isEventOwner =
-    event && currentUser && event.owner._id === currentUser._id;
+  const isEventOwner = event && currentUser && event.owner._id === currentUser._id;
+
 
   const handleDeleteEvent = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:5002/api/events/${eventId}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`http://localhost:5002/api/events/${eventId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        credentials: "include",
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -39,18 +36,15 @@ const EventDetails = () => {
 
   const handleSaveEvent = async (updatedEvent) => {
     try {
-      const response = await fetch(
-        `http://localhost:5002/api/events/${eventId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          credentials: "include",
-          body: JSON.stringify(updatedEvent),
-        }
-      );
+      const response = await fetch(`http://localhost:5002/api/events/${eventId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        credentials: "include",
+        body: JSON.stringify(updatedEvent),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -71,16 +65,13 @@ const EventDetails = () => {
 
   const handleJoinEvent = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:5002/api/events/${eventId}/join`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`http://localhost:5002/api/events/${eventId}/join`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        credentials: "include",
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -109,12 +100,9 @@ const EventDetails = () => {
         throw new Error("Event ID is missing.");
       }
 
-      const response = await fetch(
-        `http://localhost:5002/api/events/${eventId}`,
-        {
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`http://localhost:5002/api/events/${eventId}`, {
+        credentials: "include",
+      });
 
       if (!response.ok) {
         throw new Error("Failed to fetch event details.");
@@ -137,11 +125,9 @@ const EventDetails = () => {
   }
 
   if (!event) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
-    );
+    return <div className="flex justify-center items-center h-screen">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+    </div>;
   }
 
   return (
@@ -171,12 +157,9 @@ const EventDetails = () => {
         </div>
 
         <div className="bg-gray-50 p-4 rounded-lg">
-          <h2 className="text-lg font-semibold text-gray-700">
-            Category & Status
-          </h2>
+          <h2 className="text-lg font-semibold text-gray-700">Category & Status</h2>
           <p className="text-gray-600 mt-2">
-            🏷️ {event.category} |{" "}
-            {event.status === "upcoming" ? (
+            🏷️ {event.category} | {event.status === "upcoming" ? (
               <span className="text-green-500">Upcoming</span>
             ) : (
               <span className="text-gray-500">Past</span>
@@ -192,7 +175,9 @@ const EventDetails = () => {
         >
           Join Event
         </button>
-        {error && <p className="text-red-500 mt-2">{error}</p>}
+        {error && (
+          <p className="text-red-500 mt-2">{error}</p>
+        )}
       </div>
 
       <div className="mt-8">
