@@ -9,7 +9,7 @@ const io = new Server(server, {
   cors: {
     origin: [
       "http://localhost:5173",
-      "https://event-app-mern-fornt.vercel.app"
+      "https://event-app-mern-front.vercel.app"
     ],
     methods: ["GET", "POST"],
     credentials: true

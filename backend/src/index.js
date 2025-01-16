@@ -19,7 +19,7 @@ const __dirname = path.resolve();
 // Dynamically set the allowed origins
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://event-app-mern-fornt.vercel.app"
+  "https://event-app-mern-front.vercel.app"
 ];
 
 app.use(cors({
