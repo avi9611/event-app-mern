@@ -20,7 +20,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser());
 app.use(cors({
     origin: [
-      "https://event-app-mern-zrp2.vercel.app"
+      "https://event-app-mern-g7x1.vercel.app"
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],

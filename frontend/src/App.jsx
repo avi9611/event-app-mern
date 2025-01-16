@@ -16,7 +16,7 @@ import { io } from "socket.io-client";
 const SOCKET_URL =
   import.meta.env.MODE === "development"
     ? "http://localhost:5002"
-    : "https://your-backend-vercel-url.vercel.app";
+    : "https://event-app-mern-s4u6.vercel.app";
 
 const socket = io(SOCKET_URL);
 
