@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const API_URL = import.meta.env.MODE === "development" 
   ? "http://localhost:5002" 
-  : "https://event-app-mern-s4u6.vercel.app";
+  : "event-app-mern-back.vercel.app";
 
 const EventActions = ({ eventId }) => {
   const [isAttending, setIsAttending] = useState(false);
