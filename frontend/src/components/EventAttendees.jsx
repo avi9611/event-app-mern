@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 
 const API_URL = import.meta.env.MODE === "development" 
   ? "http://localhost:5002" 
-  : "https://event-app-mern-back.vercel.app";
+  : "https://event-app-mern-back-flame.vercel.app";
 
 const SOCKET_URL = API_URL;
 

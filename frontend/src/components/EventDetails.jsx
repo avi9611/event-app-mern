@@ -5,7 +5,7 @@ import EventAttendees from "./EventAttendees";
 const API_URL =
   import.meta.env.MODE === "development"
     ? "http://localhost:5002"
-    : "https://event-app-mern-back.vercel.app";
+    : "https://event-app-mern-back-flame.vercel.app";
 
 const EventDetails = () => {
   const { eventId } = useParams();
