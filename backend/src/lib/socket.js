@@ -11,9 +11,24 @@ const io = new Server(server, {
       "http://localhost:5173",
       "https://event-app-mern-front.vercel.app"
     ],
-    methods: ["GET", "POST"],
-    credentials: true
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+    transports: ['websocket', 'polling'] // Add explicit transports
+  },
+  allowEIO3: true, // Enable Engine.IO v3 compatibility
+  pingTimeout: 60000, // Increase ping timeout
+  pingInterval: 25000 // Increase ping interval
+});
+
+// Add middleware to handle authentication
+io.use((socket, next) => {
+  const token = socket.handshake.auth.token;
+  if (!token) {
+    return next(new Error('Authentication error'));
   }
+  // Add your token verification logic here if needed
+  next();
 });
 
 io.on("connection", (socket) => {

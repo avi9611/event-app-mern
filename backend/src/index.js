@@ -24,6 +24,10 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: function (origin, callback) {
+    const allowedOrigins = [
+      "http://localhost:5173",
+      "https://event-app-mern-front.vercel.app"
+    ];
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -31,9 +35,11 @@ app.use(cors({
     }
   },
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
+  exposedHeaders: ["set-cookie"]
 }));
+
 
 app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser());
