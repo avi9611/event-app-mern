@@ -1,29 +1,48 @@
-import { useChatStore } from "../store/useChatStore";
+import React from 'react';
 
-import Sidebar from "../components/Sidebar";
-import NoChatSelected from "../components/NoChatSelected";
-import ChatContainer from "../components/ChatContainer";
-import { useEffect } from "react";
+import EventDashboard from '../components/EventDashboard';
 
 const HomePage = () => {
-  const { selectedUser, resetSelectedUser } = useChatStore();
-
-  useEffect(() => {
-    resetSelectedUser();
-  }, [resetSelectedUser]);
-
   return (
-    <div className="h-screen bg-inherit">
-      <div className="flex items-center justify-center pt-20 px-4">
-        <div className="bg-base-100 rounded-lg shadow-cl w-full max-w-6xl h-[calc(100vh-8rem)]">
-          <div className="flex h-full rounded-lg overflow-hidden">
-            <Sidebar />
-
-            {!selectedUser ? <NoChatSelected /> : <ChatContainer />}
+    <div style={styles.homePage}>
+      <div style={styles.container}>
+        <div style={styles.dashboardWrapper}>
+          <div style={styles.dashboardLayout}>
+            
+            <EventDashboard />
           </div>
         </div>
       </div>
     </div>
   );
 };
+
+const styles = {
+  homePage: {
+    height: '100vh',
+  },
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: '80px',
+    paddingLeft: '16px',
+    paddingRight: '16px',
+  },
+  dashboardWrapper: {
+    backgroundColor: '#fff',
+    borderRadius: '8px',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    width: '100%',
+    maxWidth: '1200px',
+    height: 'calc(100vh - 120px)',
+  },
+  dashboardLayout: {
+    display: 'flex',
+    height: '100%',
+    borderRadius: '8px',
+    overflow: 'hidden',
+  },
+};
+
 export default HomePage;

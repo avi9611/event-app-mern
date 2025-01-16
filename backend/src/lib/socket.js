@@ -19,7 +19,6 @@ io.on("connection", (socket) => {
     const userId = socket.handshake.query.userId;
     if (userId) userSocketMap[userId] = socket.id;
 
-    // io.emit() is used to send events to all the connected clients that user is online
     io.emit("getOnlineUsers", Object.keys(userSocketMap));
 
     socket.on("disconnect", () => {

@@ -77,25 +77,33 @@ export const logout = (req, res) => {
     }
 };
 
-export const updateProfile = async(req, res) => {
-    try{
-        const { profilePic} = req.body;
-        const userId = req.user._id;
+export const updateProfile = async (req, res) => {
+    try {
+      const { profilePic } = req.body;
+      const userId = req.user._id;
+  
+      if (!profilePic) {
+        return res.status(400).json({ msg: "Profile picture is required" });
+      }
+  
+      console.log("Profile Pic Input:", profilePic);
+  
+      const uploadResponse = await cloudinary.uploader.upload(profilePic, {
+        folder: "profile_pictures",
+      });
 
-        if(!profilePic){
-            return res.status(400).json({ msg: "Profile picture is required" });
-        }
-
-        const uploadResponse = await cloudinary.uploader.upload(profilePic)
-        const updatedUser = await User.findByIdAndUpdate(userId, { profilePic: uploadResponse.secure_url }, { new: true });
-
-        res.status(200).json(updatedUser)
-
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { profilePic: uploadResponse.secure_url },
+        { new: true }
+      );
+  
+      res.status(200).json(updatedUser);
     } catch (err) {
-        console.log("error in update profile: ", err);
-        res.status(500).json({ msg: "Server Error" });
+      console.error("Error in update profile: ", err);
+      res.status(500).json({ msg: "Server Error" });
     }
-};
+  };
 
 export const checkAuth =(req,res) => {
     try{

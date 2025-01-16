@@ -2,8 +2,8 @@ import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
-import SettingsPage from "./pages/SettingsPage";
-import ProfilePage from "./pages/ProfilePage";
+import EventDetails from './components/EventDetails';
+import './index.css'
 
 
 import { useAuthStore } from "./store/useAuthStore";
@@ -12,11 +12,19 @@ import { Loader } from "lucide-react";
 import { Toaster } from "react-hot-toast";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { themeStore } from "./store/themeStore";
+import { io } from 'socket.io-client';
+
+const socket = io('http://localhost:5002'); 
+
+socket.on('attendeeUpdate', (data) => {
+  console.log('Attendee update:', data);
+});
 
 const App = () => {
 
   const { authUser, checkAuth, isCheckingAuth, onlineUsers } = useAuthStore();
   const theme = themeStore();
+  
 
   console.log({onlineUsers});
 
@@ -41,9 +49,7 @@ const App = () => {
         <Route path="/" element={authUser ? <HomePage /> : <Navigate to="/login" />} />
         <Route path="/signup" element={!authUser ? <SignUpPage />: <Navigate to="/"/>} />
         <Route path="/login" element={!authUser ? <LoginPage />: <Navigate to="/"/>} />
-        <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/profile" element={authUser ? <ProfilePage /> : <Navigate to="/login" />} />
-      
+        <Route path="/events/:eventId" element={authUser ? <EventDetails /> : <Navigate to="/login" />} />
       </Routes>
 
       <Toaster />

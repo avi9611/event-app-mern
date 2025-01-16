@@ -6,11 +6,9 @@ import {
   EyeOff,
   Loader,
   Mail,
-  MessageSquare,
   User,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import AuthImagePattern from "../components/AuthImagePattern";
 import toast from "react-hot-toast";
 
 const SignUpPage = () => {
@@ -44,110 +42,91 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="min-h-screen grid lg:grid-cols-2">
-      {/* left side */}
-      <div className="flex flex-col justify-center items-center p-6 sm:p-12">
-        <div className="w-full max-w-md space-y-8">
-          {/* LOGO */}
-          <div className="text-center mb-8">
-            <div className="flex flex-col items-center gap-4">
-              <div className="h-16 w-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg">
-                <MessageSquare className="h-8 w-8 text-white" />
+    <div className="h-screen flex justify-center items-center bg-gray-100">
+      <div className="w-96 p-6 bg-white rounded-lg shadow-md">
+        <h1 className="text-2xl font-bold text-gray-800 text-center mb-4">Sign Up</h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text font-medium">Full Name</span>
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <User className="size-5 text-base-content/40" />
               </div>
-              <h1 className="text-3xl font-extrabold text-white-800">
-                Join Us Today
-              </h1>
-              <p className="text-gray-400 text-sm sm:text-base">
-                Experience the best platform for all your needs.
-              </p>
+              <input
+                type="text"
+                className={`input input-bordered w-full pl-10`}
+                placeholder="Username"
+                value={formData.fullName}
+                onChange={(e) =>
+                  setFormData({ ...formData, fullName: e.target.value })
+                }
+              />
+            </div>
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text font-medium">Email</span>
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Mail className="size-5 text-base-content/40" />
+              </div>
+              <input
+                type="email"
+                className={`input input-bordered w-full pl-10`}
+                placeholder="user@example.com"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+              />
+            </div>
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text font-medium">Password</span>
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <User className="size-5 text-base-content/40" />
+              </div>
+              <input
+                type={showPassword ? "text" : "password"}
+                className={`input input-bordered w-full pl-10`}
+                placeholder="⁕⁕⁕⁕⁕⁕⁕⁕"
+                value={formData.password}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <EyeOff className="size-5 text-base-content/40" />
+                ) : (
+                  <Eye className="size-5 text-base-content/40" />
+                )}
+              </button>
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Name */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">Full Name</span>
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User className="size-5 text-base-content/40" />
-                </div>
-                <input
-                  type="text"
-                  className={`input input-bordered w-full pl-10`}
-                  placeholder="Avinash N"
-                  value={formData.fullName}
-                  onChange={(e) =>
-                    setFormData({ ...formData, fullName: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-            {/* Mail */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">Email</span>
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="size-5 text-base-content/40" />
-                </div>
-                <input
-                  type="email"
-                  className={`input input-bordered w-full pl-10`}
-                  placeholder="avinashpoojary651@gmail.com"
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-            {/* Password */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">Password</span>
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User className="size-5 text-base-content/40" />
-                </div>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  className={`input input-bordered w-full pl-10`}
-                  placeholder="⁕⁕⁕⁕⁕⁕⁕⁕"
-                  value={formData.password}
-                  onChange={(e) =>
-                    setFormData({ ...formData, password: e.target.value })
-                  }
-                />
-                <button
-                  type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <EyeOff className="size-5 text-base-content/40" />
-                  ) : (
-                    <Eye className="size-5 text-base-content/40" />
-                  )}
-                </button>
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              className={`btn w-full flex items-center justify-center gap-2 ${
-                isSigningUp
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
-              } text-white font-semibold py-2 px-4 rounded`}
-              disabled={isSigningUp}
-            >
-              {isSigningUp ? (
-                <>
-                  <Loader className="animate-spin size-5 text-white" />
+          <button
+            type="submit"
+            className={`btn w-full flex items-center justify-center gap-2 ${
+              isSigningUp
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+            } text-white font-semibold py-2 px-4 rounded`}
+            disabled={isSigningUp}
+          >
+            {isSigningUp ? (
+              <>
+                <Loader className="animate-spin size-5 text-white" />
                   Processing...
                 </>
               ) : (
@@ -168,12 +147,6 @@ const SignUpPage = () => {
           </div>
         </div>
       </div>
-      {/* right side */}
-      <AuthImagePattern
-        title="Join our community"
-        subtitle="Connect, share, and cherish every moment with the ones who matter most."
-      />
-    </div>
   );
 };
 

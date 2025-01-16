@@ -36,4 +36,29 @@ export default [
       ],
     },
   },
+  {
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:tailwindcss/recommended"
+    ],
+    "plugins": ["react", "tailwindcss"],
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "env": {
+      "browser": true,
+      "es2021": true,
+      "node": true
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    }
+  }
 ]
